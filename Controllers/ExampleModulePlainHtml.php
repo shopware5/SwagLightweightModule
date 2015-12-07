@@ -1,6 +1,10 @@
 <?php
-class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action {
 
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query\Expr\Join;
+
+class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action
+{
     /**
      * @var \Shopware\Models\Site\Repository
      */
@@ -27,7 +31,7 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     private function getSupplierRepository()
     {
         if ($this->supplierRepository === null) {
-            $this->supplierRepository = Shopware()->Models()->getRepository('Shopware\Models\Article\Article');
+            $this->supplierRepository = $this->getModelManager()->getRepository('Shopware\Models\Article\Article');
         }
 
         return $this->supplierRepository;
@@ -36,7 +40,7 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     private function getFormRepository()
     {
         if ($this->formRepository === null) {
-            $this->formRepository = Shopware()->Models()->getRepository('Shopware\Models\Config\Form');
+            $this->formRepository = $this->getModelManager()->getRepository('Shopware\Models\Config\Form');
         }
 
         return $this->formRepository;
@@ -50,33 +54,34 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     protected function getEmotionRepository()
     {
         if (self::$emotionRepository === null) {
-            self::$emotionRepository = Shopware()->Models()->getRepository('Shopware\Models\Emotion\Emotion');
+            self::$emotionRepository = $this->getModelManager()->getRepository('Shopware\Models\Emotion\Emotion');
         }
+
         return self::$emotionRepository;
     }
+    
+    
 
     public function indexAction()
     {
-
     }
 
     public function listAction()
     {
         $filter = null;
-        $sort = [[ 'property' => 'name' ]];
+        $sort = [['property' => 'name']];
         $limit = 25;
         $offset = 0;
 
         $query = $this->getSupplierRepository()->getSupplierListQuery($filter, $sort, $limit, $offset);
-        $total = Shopware()->Models()->getQueryCount($query);
+        $total = $this->getModelManager()->getQueryCount($query);
         $suppliers = $query->getArrayResult();
 
-        $this->View()->assign([ 'suppliers' => $suppliers, 'totalSuppliers' => $total ]);
+        $this->View()->assign(['suppliers' => $suppliers, 'totalSuppliers' => $total]);
     }
 
     public function emotionAction()
     {
-
     }
 
     public function getEmotionAction()
@@ -91,37 +96,37 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
 
         $query = $this->getEmotionRepository()->getListingQuery($filter, $filterBy, $categoryId);
 
-        $query->setFirstResult($offset)
-            ->setMaxResults($limit);
+        $query->setFirstResult($offset)->setMaxResults($limit);
 
-        /**@var $statement PDOStatement*/
+        /**@var $statement PDOStatement */
         $statement = $query->execute();
         $emotions = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->View()->assign([ 'emotions' => $emotions ]);
+        $this->View()->assign(['emotions' => $emotions]);
     }
 
-    public function configAction() {
+    public function configAction()
+    {
         $repository = $this->getFormRepository();
 
         $user = Shopware()->Auth()->getIdentity();
         /** @var $locale \Shopware\Models\Shop\Locale */
         $locale = $user->locale;
-        $filter = [ [ 'property' => 'id', 'value' => 133 ]];
+        $filter = [['property' => 'id', 'value' => 133]];
 
         /** @var $builder \Shopware\Components\Model\QueryBuilder */
         $builder = $repository->createQueryBuilder('form')
-            ->leftJoin('form.elements', 'element')
-            ->leftJoin('form.translations', 'formTranslation', \Doctrine\ORM\Query\Expr\Join::WITH, 'formTranslation.localeId = :localeId')
-            ->leftJoin('element.translations', 'elementTranslation', \Doctrine\ORM\Query\Expr\Join::WITH, 'elementTranslation.localeId = :localeId')
-            ->leftJoin('element.values', 'value')
             ->select(array('form', 'element', 'value', 'elementTranslation', 'formTranslation'))
+            ->leftJoin('form.elements', 'element')
+            ->leftJoin('form.translations', 'formTranslation', Join::WITH, 'formTranslation.localeId = :localeId')
+            ->leftJoin('element.translations', 'elementTranslation', Join::WITH, 'elementTranslation.localeId = :localeId')
+            ->leftJoin('element.values', 'value')
             ->setParameter("localeId", $locale->getId());
 
         $builder->addOrderBy((array) $this->Request()->getParam('sort', array()))
             ->addFilter($filter);
 
-        $data = $builder->getQuery()->getOneOrNullResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
+        $data = $builder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
 
         foreach ($data['elements'] as &$values) {
             foreach ($values['translations'] as $array) {
@@ -138,11 +143,10 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
             }
         }
 
-        $this->View()->assign([ 'data' => $data ]);
+        $this->View()->assign(['data' => $data]);
     }
 
     public function createSubWindowAction()
     {
-
     }
 }

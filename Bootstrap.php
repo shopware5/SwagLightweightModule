@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shopware 5.0
  * Copyright © 2015 shopware AG
@@ -25,6 +26,7 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
 {
     /**
      * Returns an array with the capabilities of the plugin.
+     *
      * @return array
      */
     public function getCapabilities()
@@ -38,6 +40,7 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
 
     /**
      * Returns the current version of the plugin.
+     *
      * @return string
      */
     public function getVersion()
@@ -67,11 +70,11 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
         try {
             $this->registerController();
             $this->createMenu();
+
             return array(
                 'success' => true,
                 'invalidateCache' => array('backend')
             );
-
         } catch (Exception $e) {
             return array('success' => false, 'message' => $e->getMessage());
         }
@@ -95,18 +98,21 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
      */
     public function createMenu()
     {
-        $this->createMenuItem(array(
-            'label' => 'Lightweight Backend Module',
-            'onclick' => 'Shopware.ModuleManager.createSimplifiedModule("ExampleModulePlainHtml", { "title": "Lightweight Backend Module" })',
-            'class' => 'sprite-application-icon-large',
-            'active' => 1,
-            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
-        ));
+        $this->createMenuItem(
+            array(
+                'label' => 'Lightweight Backend Module',
+                'onclick' => 'Shopware.ModuleManager.createSimplifiedModule("ExampleModulePlainHtml", { "title": "Lightweight Backend Module" })',
+                'class' => 'sprite-application-icon-large',
+                'active' => 1,
+                'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
+            )
+        );
     }
 
     /**
      * Uninstall function of the plugin.
      * Fired from the plugin manager.
+     *
      * @return bool
      */
     public function uninstall()
@@ -125,9 +131,8 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
      */
     public function onGetBackendController()
     {
-        $this->Application()->Template()->addTemplateDir(
-            $this->Path() . 'Views/'
-        );
+        $this->get('template')->addTemplateDir($this->Path() . 'Views/');
+
         return $this->Path() . 'Controllers/ExampleModulePlainHtml.php';
     }
 }
