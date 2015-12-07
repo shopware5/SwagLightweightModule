@@ -3,6 +3,12 @@
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 
+/*
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action
 {
     /**

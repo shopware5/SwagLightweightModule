@@ -25,6 +25,6 @@ git clone git@github.com:shopwareLabs/SwagLightweightModule.git SwagLightweightM
 Now go to the administration panel of your Shopware installation and install the plugin using our plugin manager. After sucessfully installing the plugin clear the cache and reload the backend. The module is now available under the "Settings" main menu entry.
 
 ### License
-The plugin is published under MIT. Please see [License File](LICENSE-MIT) for more information.
+The plugin is published under MIT. Please see [License File](LICENSE) for more information.
 
  
