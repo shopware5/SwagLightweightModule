@@ -19,7 +19,7 @@ The support of lightweight backend modules was added to Shopware in version 5.1.
 
 ```
 cd engine/Shopware/Plugins/Local/Backend
-git clone git@github.com:shopwareLabs/SwagLightweightModule.git SwagLightweightModule.git
+git clone git@github.com:shopwareLabs/SwagLightweightModule.git SwagLightweightModule
 ```
 
 Now go to the administration panel of your Shopware installation and install the plugin using our plugin manager. After sucessfully installing the plugin clear the cache and reload the backend. The module is now available under the "Settings" main menu entry.
