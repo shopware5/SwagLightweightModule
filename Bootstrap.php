@@ -54,7 +54,7 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
     public function install()
     {
         try {
-            $this->registerController();
+            $this->registerController('Backend', 'ExampleModulePlainHtml');
             $this->createMenu();
 
             return [
@@ -64,17 +64,6 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
-    }
-
-    /**
-     * Registers the plugin controller event for the backend controller SwagFavorites
-     */
-    public function registerController()
-    {
-        $this->subscribeEvent(
-            'Enlight_Controller_Dispatcher_ControllerPath_Backend_ExampleModulePlainHtml',
-            'onGetBackendController'
-        );
     }
 
     /**
@@ -104,21 +93,5 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
     public function uninstall()
     {
         return true;
-    }
-
-    /**
-     * Returns the path to the controller.
-     *
-     * Event listener function of the Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagFavorites
-     * event.
-     * Fired if an request will be root to the own Favorites backend controller.
-     *
-     * @return string
-     */
-    public function onGetBackendController()
-    {
-        $this->get('template')->addTemplateDir($this->Path() . 'Views/');
-
-        return $this->Path() . 'Controllers/ExampleModulePlainHtml.php';
     }
 }
