@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/Components/CSRFWhitelistAware.php';
+
 /*
  * (c) shopware AG <info@shopware.com>
  *
@@ -88,7 +90,7 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
                 'onclick' => 'Shopware.ModuleManager.createSimplifiedModule("ExampleModulePlainHtml", { "title": "Lightweight Backend Module" })',
                 'class' => 'sprite-application-icon-large',
                 'active' => 1,
-                'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
+                'parent' => $this->Menu()->findOneBy(['label' => 'Einstellungen'])
             )
         );
     }

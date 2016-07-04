@@ -2,6 +2,7 @@
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopware\Components\CSRFWhitelistAware;
 
 /*
  * (c) shopware AG <info@shopware.com>
@@ -9,7 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action
+class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action implements CSRFWhitelistAware
 {
     /**
      * @var \Shopware\Models\Site\Repository
@@ -154,5 +155,10 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
 
     public function createSubWindowAction()
     {
+    }
+
+    public function getWhitelistedCSRFActions()
+    {
+        return ['index'];
     }
 }
