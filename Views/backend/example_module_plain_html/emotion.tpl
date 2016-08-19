@@ -47,7 +47,7 @@
 {block name="content/javascript"}
     <script type="text/javascript" src="{link file="backend/_resources/js/handlebars-v3.0.3.js"}"></script>
     <script type="text/javascript">
-        var url = "{url controller="ExampleModulePlainHtml" action="getEmotion"}",
+        var url = "{url controller="ExampleModulePlainHtml" action="getEmotion" __csrf_token=$csrfToken}",
             $content = $('.ajax-content');
         {literal}
 

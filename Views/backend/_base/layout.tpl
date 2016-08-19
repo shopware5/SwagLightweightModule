@@ -21,10 +21,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li{if {controllerAction} === 'index'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="index"}">Home</a></li>
-                <li{if {controllerAction} === 'list'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="list"}">Controller loaded list</a></li>
-                <li{if {controllerAction} === 'emotion'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="emotion"}">Ajax loaded list</a></li>
-                <li{if {controllerAction} === 'config'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="config"}">Plugin Config Form</a></li>
+                <li{if {controllerAction} === 'index'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="index" __csrf_token=$csrfToken}">Home</a></li>
+                <li{if {controllerAction} === 'list'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="list" __csrf_token=$csrfToken}">Controller loaded list</a></li>
+                <li{if {controllerAction} === 'emotion'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="emotion" __csrf_token=$csrfToken}">Ajax loaded list</a></li>
+                <li{if {controllerAction} === 'config'} class="active"{/if}><a href="{url controller="ExampleModulePlainHtml" action="config" __csrf_token=$csrfToken}">Plugin Config Form</a></li>
 
             </ul>
         </div><!--/.nav-collapse -->

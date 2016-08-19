@@ -30,6 +30,12 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
      */
     protected $formRepository = null;
 
+    public function postDispatch()
+    {
+        $csrfToken = $this->container->get('BackendSession')->offsetGet('X-CSRF-Token');
+        $this->View()->assign([ 'csrfToken' => $csrfToken ]);
+    }
+
     /**
      * Internal helper function to get access to the form repository.
      *

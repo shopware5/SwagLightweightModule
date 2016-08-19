@@ -17,11 +17,11 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
      */
     public function getCapabilities()
     {
-        return array(
+        return [
             'install' => true,
             'enable' => true,
             'update' => true
-        );
+        ];
     }
 
     /**
@@ -57,12 +57,12 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
             $this->registerController();
             $this->createMenu();
 
-            return array(
+            return [
                 'success' => true,
-                'invalidateCache' => array('backend')
-            );
+                'invalidateCache' => ['backend']
+            ];
         } catch (Exception $e) {
-            return array('success' => false, 'message' => $e->getMessage());
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 
@@ -85,13 +85,13 @@ class Shopware_Plugins_Backend_SwagLightweightModule_Bootstrap extends Shopware_
     public function createMenu()
     {
         $this->createMenuItem(
-            array(
+            [
                 'label' => 'Lightweight Backend Module',
                 'onclick' => 'Shopware.ModuleManager.createSimplifiedModule("ExampleModulePlainHtml", { "title": "Lightweight Backend Module" })',
                 'class' => 'sprite-application-icon-large',
                 'active' => 1,
                 'parent' => $this->Menu()->findOneBy(['label' => 'Einstellungen'])
-            )
+            ]
         );
     }
 
