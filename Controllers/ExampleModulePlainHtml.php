@@ -3,6 +3,9 @@
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopware\Components\CSRFWhitelistAware;
+use Shopware\Models\Article\Repository as ArticleRepo;
+use Shopware\Models\Emotion\Repository as EmotionRepo;
+use Shopware\Models\Form\Repository as FormRepo;
 
 /*
  * (c) shopware AG <info@shopware.com>
@@ -13,20 +16,20 @@ use Shopware\Components\CSRFWhitelistAware;
 class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Controller_Action implements CSRFWhitelistAware
 {
     /**
-     * @var \Shopware\Models\Site\Repository
+     * @var ArticleRepo
      */
     protected $supplierRepository = null;
 
     /**
      * Emotion repository. Declared for an fast access to the emotion repository.
      *
-     * @var \Shopware\Models\Emotion\Repository
+     * @var EmotionRepo
      * @access private
      */
     public static $emotionRepository = null;
 
     /**
-     * @var \Shopware\Models\Form\Repository
+     * @var FormRepo
      */
     protected $formRepository = null;
 
@@ -39,17 +42,20 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     /**
      * Internal helper function to get access to the form repository.
      *
-     * @return \Shopware\Models\Article\Repository
+     * @return ArticleRepo
      */
     private function getSupplierRepository()
     {
         if ($this->supplierRepository === null) {
-            $this->supplierRepository = $this->getModelManager()->getRepository('Shopware\Models\Article\Article');
+            $this->supplierRepository = $this->getModelManager()->getRepository('Shopware\Models\Article\Supplier');
         }
 
         return $this->supplierRepository;
     }
 
+    /**
+     * @return FormRepo
+     */
     private function getFormRepository()
     {
         if ($this->formRepository === null) {
@@ -62,7 +68,7 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     /**
      * Helper function to get access on the static declared repository
      *
-     * @return null|Shopware\Models\Emotion\Repository
+     * @return EmotionRepo
      */
     protected function getEmotionRepository()
     {
@@ -72,8 +78,6 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
 
         return self::$emotionRepository;
     }
-    
-    
 
     public function indexAction()
     {
@@ -129,14 +133,14 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
 
         /** @var $builder \Shopware\Components\Model\QueryBuilder */
         $builder = $repository->createQueryBuilder('form')
-            ->select(array('form', 'element', 'value', 'elementTranslation', 'formTranslation'))
+            ->select(['form', 'element', 'value', 'elementTranslation', 'formTranslation'])
             ->leftJoin('form.elements', 'element')
             ->leftJoin('form.translations', 'formTranslation', Join::WITH, 'formTranslation.localeId = :localeId')
             ->leftJoin('element.translations', 'elementTranslation', Join::WITH, 'elementTranslation.localeId = :localeId')
             ->leftJoin('element.values', 'value')
             ->setParameter("localeId", $locale->getId());
 
-        $builder->addOrderBy((array) $this->Request()->getParam('sort', array()))
+        $builder->addOrderBy((array) $this->Request()->getParam('sort', []))
             ->addFilter($filter);
 
         $data = $builder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
@@ -151,7 +155,7 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
                 }
             }
 
-            if (!in_array($values['type'], array('select', 'combo'))) {
+            if (!in_array($values['type'], ['select', 'combo'])) {
                 continue;
             }
         }
