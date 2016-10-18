@@ -4,6 +4,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopware\Components\CSRFWhitelistAware;
 use Shopware\Models\Article\Repository as ArticleRepo;
+use Shopware\Models\Article\SupplierRepository;
 use Shopware\Models\Emotion\Repository as EmotionRepo;
 use Shopware\Models\Form\Repository as FormRepo;
 
@@ -42,7 +43,7 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
     /**
      * Internal helper function to get access to the form repository.
      *
-     * @return ArticleRepo
+     * @return SupplierRepository
      */
     private function getSupplierRepository()
     {
@@ -85,12 +86,12 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
 
     public function listAction()
     {
-        $filter = null;
-        $sort = [['property' => 'name']];
+        $filter = [];
+        $sort = [['property' => 'supplier.name']];
         $limit = 25;
         $offset = 0;
 
-        $query = $this->getSupplierRepository()->getSupplierListQuery($filter, $sort, $limit, $offset);
+        $query = $this->getSupplierRepository()->getListQuery($filter, $sort, $limit, $offset);
         $total = $this->getModelManager()->getQueryCount($query);
         $suppliers = $query->getArrayResult();
 
