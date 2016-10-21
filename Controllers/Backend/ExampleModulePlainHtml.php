@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\DBAL\Driver\PDOStatement;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopware\Components\CSRFWhitelistAware;
@@ -33,6 +34,11 @@ class Shopware_Controllers_Backend_ExampleModulePlainHtml extends Enlight_Contro
      * @var FormRepo
      */
     protected $formRepository = null;
+
+    public function preDispatch()
+    {
+        $this->get('template')->addTemplateDir(__DIR__ . '/../../Resources/views/');
+    }
 
     public function postDispatch()
     {
