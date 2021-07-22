@@ -10,16 +10,17 @@
         <h2>Module window operations</h2>
     </div>
 
-    <p>
-        <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default btn-minimize">Minimize</button>
-            <button type="button" class="btn btn-default btn-maximize">Maximize</button>
-            <button type="button" class="btn btn-default btn-show">Show</button>
-            <button type="button" class="btn btn-default btn-hide">Hide</button>
-            <button type="button" class="btn btn-danger btn-destroy">Destroy</button>
-            <button type="button" class="btn btn-default btn-subwindow">Test subwindow</button>
-        </div>
-    </p>
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default btn-minimize">Minimize</button>
+        <button type="button" class="btn btn-default btn-maximize">Maximize</button>
+        <button type="button" class="btn btn-default btn-show">Show</button>
+        <button type="button" class="btn btn-default btn-hide">Hide</button>
+        <button type="button" class="btn btn-danger btn-destroy">Destroy</button>
+        <button type="button" class="btn btn-default btn-subwindow">Test subwindow</button>
+    </div>
+
+    <br/>
+    <br/>
 
     <div class="panel panel-default">
         <div class="panel-heading"><h3 class="panel-title">Set the window title</h3></div>
