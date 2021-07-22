@@ -74,8 +74,8 @@
                     template = Handlebars.compile(source);
 
                 response.emotions.forEach(function(item, index) {
-                    response.emotions[index ].isLandingPage = item.isLandingPage != '0';
-                    response.emotions[index ].active = item.active != '0';
+                    response.emotions[index ].isLandingPage = item.isLandingPage !== '0';
+                    response.emotions[index ].active = item.active !== '0';
                 });
 
                 $content.empty().html(template(response));
